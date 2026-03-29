@@ -762,6 +762,11 @@ body.nav-open {
 /* --- Praxis Image --- */
 .praxis-image {
   margin-bottom: clamp(32px, 4vw, 48px);
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 2px;
+  overflow: hidden;
 }
 
 .praxis-image img {
