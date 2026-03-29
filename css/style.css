@@ -762,15 +762,12 @@ body.nav-open {
 /* --- Praxis Image --- */
 .praxis-image {
   margin-bottom: clamp(32px, 4vw, 48px);
-  overflow: hidden;
-  max-height: 400px;
 }
 
 .praxis-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
+  height: auto;
+  display: block;
 }
 
 /* --- Services Grid --- */
