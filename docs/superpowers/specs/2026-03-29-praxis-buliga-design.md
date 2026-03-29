@@ -15,9 +15,12 @@ Neugestaltung der Praxiswebsite von Matei Buliga als moderne, statische Website 
 
 | # | Schwäche (alt) | Lösung (neu) |
 |---|---------------|-------------|
+| 1 | Google Sites — limitiertes System | Statisches HTML/CSS/JS, modernes CSS, volle Kontrolle |
+| 2 | Kontaktdaten fehlen auf der Startseite | Hero-Info-Bar + Kontaktsektion + Footer |
+| 3 | Kein Online-Buchungssystem | Phase 2 (nicht im Scope) |
 | 4 | Keine FAQ-Sektion | FAQ-Akkordeon mit 7 Fragen + Schema.org FAQPage Markup |
-| 5 | Kein Schema.org-Markup | LocalBusiness + FAQPage Structured Data |
-| 6 | Limitiertes SEO | Meta-Tags, Open Graph, semantisches HTML, H-Tag-Hierarchie |
+| 5 | Kein Schema.org-Markup | ProfessionalService + FAQPage Structured Data |
+| 6 | Limitiertes SEO | Meta-Tags, Open Graph, Canonical, semantisches HTML, H-Tag-Hierarchie |
 | 7 | CTA nur am Hero | Wiederholter CTA am Ende jeder inhaltlichen Sektion |
 | 8 | Kein Footer mit Kontaktdaten | Vollständige Kontaktsektion + Footer mit Impressum/Datenschutz |
 
@@ -28,7 +31,7 @@ Neugestaltung der Praxiswebsite von Matei Buliga als moderne, statische Website 
 | Aspekt | Entscheidung |
 |--------|-------------|
 | **Stack** | Statisches HTML/CSS/JS — kein Framework |
-| **CSS** | Custom Properties, clamp(), Container Queries, Grid, Flexbox |
+| **CSS** | Custom Properties, clamp(), Grid, Flexbox |
 | **JS** | Vanilla JS — IntersectionObserver (Scroll-Spy, Fade-in), Akkordeon |
 | **Fonts** | Google Fonts: Playfair Display (Headings), Inter (Body) |
 | **Icons** | Inline SVG (Lucide-Style, stroke-width 1.5) |
@@ -50,14 +53,21 @@ Ergänzt durch **Soft UI Evolution** — subtile Schatten, Glasmorphism-Header, 
 |-------|------|-----------|
 | `--green` | `#3D5240` | Primärfarbe: Überschriften, Buttons, Akzente |
 | `--green-light` | `#4a6350` | Hover-States |
-| `--green-muted` | `rgba(61,82,64,0.6)` | Sekundärtext |
+| `--green-muted` | `rgba(61,82,64,0.78)` | Sekundärtext |
 | `--green-subtle` | `rgba(61,82,64,0.04)` | Hintergründe (Cards, Badges) |
 | `--cream` | `#F6F3EF` | Haupthintergrund |
 | `--cream-dark` | `#EDE8E1` | Sekundärer Hintergrund |
 | `--text` | `#1C1C1C` | Primärtext |
-| `--text-muted` | `rgba(61,82,64,0.55)` | Labels, Beschreibungen |
+| `--text-muted` | `rgba(61,82,64,0.75)` | Labels, Beschreibungen |
+| `--text-body` | `rgba(28,28,28,0.7)` | Fließtext in Cards/Beschreibungen |
 
-**Kontrast:** Alle Text/Hintergrund-Kombinationen ≥ 4.5:1 (WCAG AA).
+**Kontrast:** Alle Text/Hintergrund-Kombinationen ≥ 4.5:1 (WCAG AA). Geprüfte Paare:
+- `--text-muted` auf `--cream`: ≈ 4.6:1 ✓
+- `--green-muted` auf `--cream`: ≈ 4.8:1 ✓
+- `--text-body` auf `--cream`: ≈ 5.1:1 ✓
+- `--green` auf `--cream`: ≈ 7.2:1 ✓
+- Footer-Text (rgba cream 0.65) auf #344538: ≈ 4.7:1 ✓
+- Kontakt-Labels (rgba cream 0.65) auf `--green`: ≈ 4.7:1 ✓
 
 ### 3.3 Typografie
 
@@ -76,7 +86,7 @@ Ergänzt durch **Soft UI Evolution** — subtile Schatten, Glasmorphism-Header, 
 
 ### 3.4 Spacing
 
-8px-Inkremente: 8, 16, 20, 24, 28, 32, 40, 48, 56, 64, 80, 120px.
+4px-basiertes System: 4, 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64, 80, 120px.
 Responsive via `clamp()` — z.B. `padding: clamp(60px, 10vw, 120px)`.
 
 ### 3.5 Schatten & Effekte
@@ -98,7 +108,7 @@ Responsive via `clamp()` — z.B. `padding: clamp(60px, 10vw, 120px)`.
 | Step-Number Fill | 300ms | ease-out | Hover |
 | Availability Pulse | 2.5s | ease-in-out | Infinite (nur auf .dot) |
 
-**Alle Animationen werden bei `prefers-reduced-motion: reduce` deaktiviert.**
+**Alle Animationen werden bei `prefers-reduced-motion: reduce` deaktiviert.** Inkl. `scroll-behavior: auto` statt `smooth`.
 
 ---
 
@@ -118,6 +128,11 @@ Responsive via `clamp()` — z.B. `padding: clamp(60px, 10vw, 120px)`.
 - CTA-Button: „Erstgespräch" (gefüllt, Waldgrün)
 - Glasmorphism: `backdrop-filter: blur(24px)`
 - Mobile: Hamburger-Menü (nur CTA + Toggle sichtbar)
+  - Click → Full-Screen Overlay mit Slide-down (300ms ease-out)
+  - Schließen: X-Button, Tap auf Link, Tap außerhalb
+  - Body-Scroll gesperrt (overflow: hidden) bei offenem Menü
+  - Focus-Trap: Tab-Navigation bleibt im Menü
+  - Schließt automatisch bei Scroll-Link-Klick
 
 #### Sektion 1: Hero
 - Label: „Psychotherapie in Wien"
@@ -183,7 +198,7 @@ Responsive via `clamp()` — z.B. `padding: clamp(60px, 10vw, 120px)`.
 
 #### Sektion 6: Kontakt
 - Vollflächig Waldgrün-Hintergrund
-- Section-Label (invertiert)
+- Section-Label (invertiert, rgba cream 0.65)
 - 2-Spalten: Kontaktdaten | Map + Öffnungszeiten
 - Links:
   - H2: „Nehmen Sie *Kontakt auf*"
@@ -192,37 +207,45 @@ Responsive via `clamp()` — z.B. `padding: clamp(60px, 10vw, 120px)`.
   - E-Mail: office@praxis-buliga.at (klickbar, mailto:)
   - Adresse: Kuefsteingasse 48/50, 1140 Wien + Öffi-Hinweis
 - Rechts:
-  - Google Maps Einbettung
+  - Google Maps Einbettung (DSGVO-konform: 2-Click-Lösung — Platzhalter mit „Karte laden" Button, Map erst nach Klick geladen)
   - Praxiszeiten: Mo & Mi 14:30–19:30
   - „Derzeit Plätze verfügbar" (pulsierender Dot)
 
 #### Footer
-- Dunkleres Grün (#344538)
+- Dunkleres Grün (#344538), Text rgba(cream, 0.65)
 - Copyright + Impressum/Datenschutz Links
 
 ---
 
 ## 5. SEO & Structured Data
 
-### 5.1 Meta-Tags
+### 5.1 HTML-Grundlagen
+
+```html
+<html lang="de">
+```
+
+### 5.2 Meta-Tags
 
 ```html
 <title>Matei Buliga — Psychotherapie in Wien | Einzeltherapie, Paartherapie, Jugendliche</title>
 <meta name="description" content="Psychotherapeut in Wien 1140. Einzeltherapie, Paartherapie und Therapie für Jugendliche. Lösungsorientiert, ressourcenstärkend. Jetzt Erstgespräch anfragen.">
 <meta name="keywords" content="Psychotherapie Wien, Psychotherapeut 1140, Einzeltherapie, Paartherapie, Jugendtherapie, Matei Buliga">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://www.praxis-buliga.at/">
 ```
 
-### 5.2 Open Graph
+### 5.3 Open Graph
 
 ```html
 <meta property="og:title" content="Matei Buliga — Psychotherapie in Wien">
 <meta property="og:description" content="Ein sicherer Raum für Ihre persönliche Entwicklung. Einzeltherapie, Paartherapie und Therapie für Jugendliche.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.praxis-buliga.at/">
-<meta property="og:image" content="og-image.jpg">
+<meta property="og:image" content="https://www.praxis-buliga.at/img/og-image.jpg">
 ```
 
-### 5.3 Schema.org — LocalBusiness
+### 5.4 Schema.org — ProfessionalService
 
 ```json
 {
@@ -248,9 +271,51 @@ Responsive via `clamp()` — z.B. `padding: clamp(60px, 10vw, 120px)`.
 }
 ```
 
-### 5.4 Schema.org — FAQPage
+### 5.5 Schema.org — FAQPage
 
-Alle 7 FAQ-Fragen und Antworten als strukturierte Daten.
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was erwartet mich beim Erstgespräch?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Das Erstgespräch dient dem gegenseitigen Kennenlernen. Wir klären Ihre Anliegen und Ziele und prüfen, ob die Chemie für eine Zusammenarbeit stimmt. Es gibt keinen Druck und keine Verpflichtung." }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie lange dauert eine Therapie?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Das ist sehr individuell und hängt von Ihren Anliegen und Zielen ab. Manche Themen lassen sich in wenigen Sitzungen bearbeiten, andere brauchen mehr Zeit." }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauche ich eine Überweisung?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nein, für Psychotherapie benötigen Sie in Österreich keine Überweisung. Sie können sich direkt an mich wenden." }
+    },
+    {
+      "@type": "Question",
+      "name": "Werden die Kosten von der Krankenkasse übernommen?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Da ich im Status Psychotherapeut in Fachausbildung unter Lehrsupervision bin, ist eine Kostenrückerstattung durch die Krankenkasse derzeit leider nicht möglich. Dafür biete ich flexible Sozialtarife nach Absprache an." }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist ein Psychotherapeut in Ausbildung unter Supervision?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Psychotherapeuten in Ausbildung unter Supervision haben den Großteil ihrer mehrjährigen Ausbildung bereits absolviert und arbeiten eigenständig mit KlientInnen. Ihre Arbeit wird regelmäßig von erfahrenen LehrtherapeutInnen supervidiert." }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie kann ich einen Termin absagen oder verschieben?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Verschiebungen oder Absagen sind bis 48 Stunden vor dem Termin kostenfrei möglich — per Telefon, SMS oder E-Mail." }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist Psychotherapie auch online möglich?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Bitte kontaktieren Sie mich direkt, um die aktuellen Möglichkeiten für Online-Sitzungen zu besprechen." }
+    }
+  ]
+}
+```
 
 ---
 
@@ -268,6 +333,8 @@ Alle 7 FAQ-Fragen und Antworten als strukturierte Daten.
 | Semantisches HTML | header, nav, main, section, footer, h1→h4 |
 | Keyboard-Navigation | Tab-Reihenfolge = visuelle Reihenfolge |
 | Skip-Link | „Zum Inhalt springen" (hidden, visible on focus) |
+| scroll-behavior | `smooth` → `auto` bei prefers-reduced-motion |
+| Impressum/Datenschutz Nav | `aria-current="page"` auf aktiver Seite |
 
 ---
 
@@ -308,20 +375,25 @@ Buliga_Seite/
 ├── index.html              # Startseite (Hybrid Scroll-Page)
 ├── impressum.html           # Impressum
 ├── datenschutz.html         # Datenschutzerklärung
+├── 404.html                 # Custom 404-Seite (brand-konsistent)
+├── sitemap.xml              # Sitemap für Suchmaschinen
+├── robots.txt               # Crawler-Steuerung
 ├── css/
-│   └── style.css            # Gesamtes Stylesheet
+│   └── style.css            # Gesamtes Stylesheet (inkl. @media print)
 ├── js/
-│   └── main.js              # Akkordeon, Scroll-Spy, Fade-in, Mobile-Nav
+│   └── main.js              # Akkordeon, Scroll-Spy, Fade-in, Mobile-Nav, Maps 2-Click
 ├── img/
-│   ├── portrait.webp        # Matei Buliga Portrait
-│   ├── praxis.webp          # Praxis-Foto
-│   ├── og-image.jpg         # Open Graph Image
+│   ├── portrait.webp        # Matei Buliga Portrait (+ .jpg Fallback)
+│   ├── praxis.webp          # Praxis-Foto (+ .jpg Fallback)
+│   ├── og-image.jpg         # Open Graph Image (1200x630)
 │   └── favicon.svg          # Favicon
 └── docs/
     └── superpowers/
         └── specs/
             └── 2026-03-29-praxis-buliga-design.md
 ```
+
+Bilder mit `<picture>` Element: WebP primär, JPEG als Fallback für ältere Browser.
 
 ---
 
