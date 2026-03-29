@@ -53,21 +53,21 @@ Ergänzt durch **Soft UI Evolution** — subtile Schatten, Glasmorphism-Header, 
 |-------|------|-----------|
 | `--green` | `#3D5240` | Primärfarbe: Überschriften, Buttons, Akzente |
 | `--green-light` | `#4a6350` | Hover-States |
-| `--green-muted` | `rgba(61,82,64,0.78)` | Sekundärtext |
+| `--green-muted` | `rgba(61,82,64,0.82)` | Sekundärtext |
 | `--green-subtle` | `rgba(61,82,64,0.04)` | Hintergründe (Cards, Badges) |
 | `--cream` | `#F6F3EF` | Haupthintergrund |
 | `--cream-dark` | `#EDE8E1` | Sekundärer Hintergrund |
 | `--text` | `#1C1C1C` | Primärtext |
-| `--text-muted` | `rgba(61,82,64,0.75)` | Labels, Beschreibungen |
+| `--text-muted` | `rgba(61,82,64,0.82)` | Labels, Beschreibungen |
 | `--text-body` | `rgba(28,28,28,0.7)` | Fließtext in Cards/Beschreibungen |
 
 **Kontrast:** Alle Text/Hintergrund-Kombinationen ≥ 4.5:1 (WCAG AA). Geprüfte Paare:
-- `--text-muted` auf `--cream`: ≈ 4.6:1 ✓
+- `--text-muted` auf `--cream`: ≈ 4.8:1 ✓
 - `--green-muted` auf `--cream`: ≈ 4.8:1 ✓
-- `--text-body` auf `--cream`: ≈ 5.1:1 ✓
-- `--green` auf `--cream`: ≈ 7.2:1 ✓
-- Footer-Text (rgba cream 0.65) auf #344538: ≈ 4.7:1 ✓
-- Kontakt-Labels (rgba cream 0.65) auf `--green`: ≈ 4.7:1 ✓
+- `--text-body` auf `--cream`: ≈ 6.0:1 ✓
+- `--green` auf `--cream`: ≈ 7.7:1 ✓
+- Footer-Text (rgba cream 0.70) auf #344538: ≈ 4.7:1 ✓
+- Kontakt-Labels (rgba cream 0.70) auf `--green`: ≈ 4.7:1 ✓
 
 ### 3.3 Typografie
 
@@ -198,7 +198,7 @@ Responsive via `clamp()` — z.B. `padding: clamp(60px, 10vw, 120px)`.
 
 #### Sektion 6: Kontakt
 - Vollflächig Waldgrün-Hintergrund
-- Section-Label (invertiert, rgba cream 0.65)
+- Section-Label (invertiert, rgba cream 0.70)
 - 2-Spalten: Kontaktdaten | Map + Öffnungszeiten
 - Links:
   - H2: „Nehmen Sie *Kontakt auf*"
@@ -212,7 +212,7 @@ Responsive via `clamp()` — z.B. `padding: clamp(60px, 10vw, 120px)`.
   - „Derzeit Plätze verfügbar" (pulsierender Dot)
 
 #### Footer
-- Dunkleres Grün (#344538), Text rgba(cream, 0.65)
+- Dunkleres Grün (#344538), Text rgba(cream, 0.70)
 - Copyright + Impressum/Datenschutz Links
 
 ---
